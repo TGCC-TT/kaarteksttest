@@ -1,5 +1,6 @@
 import openai
 import streamlit as st
+from openai import OpenAI
 
 st.set_page_config(page_title="AI Kaarttekst Generator", page_icon="💌")
 
@@ -16,9 +17,9 @@ prompt = st.text_area("Wat is de gelegenheid of boodschap? ✍️",
 if st.button("Genereer kaarttekst") and openai_api_key and prompt:
     with st.spinner("AI is aan het schrijven..."):
         try:
-            openai.api_key = openai_api_key
+            client = OpenAI(api_key=openai_api_key)
 
-            response = openai.ChatCompletion.create(
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": "Je schrijft warme, persoonlijke, stijlvolle kaartteksten voor alle gelegenheden. Hou het menselijk en oprecht."},
